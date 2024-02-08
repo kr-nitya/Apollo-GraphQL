@@ -1,0 +1,9 @@
+type Book {
+  title: String!
+  author: Author! #contain single Author
+}
+
+type Author {
+  name: String!
+  books: [Book] #contain list of books
+}

@@ -1,0 +1,26 @@
+# Define an interface for common animal properties
+interface Animal {
+  id: ID!
+  name: String!
+  age: Int!
+}
+
+# Define types for specific animals implementing the Animal interface
+type Dog implements Animal {
+  id: ID!
+  name: String!
+  age: Int!
+  breed: String!
+}
+
+type Cat implements Animal {
+  id: ID!
+  name: String!
+  age: Int!
+  color: String!
+}
+
+# Define a query to retrieve animals
+type Query {
+  animals: [Animal!]!
+}
