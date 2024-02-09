@@ -1,40 +1,45 @@
-// resolver.js
+const candies = [
+  {
+    "id": "gummy-bears",
+    "name": "Haribo Gummy Bears",
+    "price": 1.50
+  },
+  {
+    "id": "sour-patch",
+    "name": "Sour Patch Kids",
+    "price": 2.50
+  },
+  {
+    "id": "wonka-nerds",
+    "name": "Wonka Nerds",
+    "restockDate": "2012-04-23T18:25:43.511Z"
+  },
+  {
+    "id": "swirly-pops",
+    "name": "Swirly Pops",
+    "availableRegions": ["San Jose"]
+  }
+];
 
-// Define sample data
-const books = [
-    { title: "Book 1" },
-    { title: "Book 2" },
-  ];
-  
-  const authors = [
-    { name: "Author 1" },
-    { name: "Author 2" },
-  ];
-  
-  const resolvers = {
-    Query: {
-      search: (_, { contains }) => {
-        // Filter books and authors based on the contains parameter
-        const filteredBooks = books.filter(book => book.title.includes(contains));
-        const filteredAuthors = authors.filter(author => author.name.includes(contains));
-  
-        // Concatenate and return the filtered results
-        return [...filteredBooks, ...filteredAuthors];
+const resolvers = {
+
+  CandyResult: {
+    __resolveType(obj) {
+      if (obj.restockDate) {
+        return 'OutOfStock';
       }
+      if (obj.availableRegions) {
+        return 'RegionUnavailability';
+      }
+      if (obj.price) {
+        return 'Candy';
+      }
+      return null;
     },
-    SearchResult: {
-      __resolveType(obj, contextValue, info) {
-        // Resolve the type of SearchResult dynamically based on the object's properties
-        if (obj.title !== undefined) {
-          return 'Book';
-        }
-        if (obj.name !== undefined) {
-          return 'Author';
-        }
-        return null;
-      }
-    }
-  };
-  
-  export { resolvers };
-  
+  },
+
+  Query: {
+    candy: (_, args) => candies.find((candy) => candy.id === args.id),
+  },
+};
+export {resolvers};

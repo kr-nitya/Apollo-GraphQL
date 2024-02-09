@@ -1,0 +1,8 @@
+scalar Even
+type Query{
+    printEven(even:Even!):Even!
+}
+
+# query($even: Even!){
+#   printEven(even: $even)
+# }

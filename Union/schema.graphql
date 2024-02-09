@@ -1,11 +1,20 @@
-union SearchResult = Book | Author
-type Book{
-    title:String!
-}
-type Author{
-    name:String!
-}
 
-type Query {
-  search(contains: String): [SearchResult]!
-}
+type Candy {
+    id: String!
+    name: String
+    price: Float
+  }
+
+  type OutOfStock {
+    restockDate: String
+  }
+
+  type RegionUnavailability {
+    availableRegions: [String!]
+  }
+
+  union CandyResult = Candy | OutOfStock | RegionUnavailability
+
+  type Query {
+    candy(id: String!): CandyResult
+  }
