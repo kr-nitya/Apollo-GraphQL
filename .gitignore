@@ -4,3 +4,4 @@ node_modules
 #Ignore Package-lock.json
 package-lock.json
 
+.env
